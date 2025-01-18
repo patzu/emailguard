@@ -1,5 +1,3 @@
----
-
 # EmailGuard
 
 **EmailGuard** is a Spring Boot application designed to process and validate email content based on predefined semantic rules. The application checks the provided email text against a set of rules (e.g., grammatical accuracy, semantic clarity, market impact, etc.), and returns the text with feedback on which parts of the content pass or breach the rules. Breached sections are highlighted in red, and suggestions for corrections are provided.
@@ -102,5 +100,3 @@ You may modify the set of rules by updating the configuration files or using the
 
 ### License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
