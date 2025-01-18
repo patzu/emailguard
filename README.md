@@ -21,7 +21,7 @@
 
 ### Prerequisites
 - Java 21 or higher
-- Maven or Gradle (for dependency management)
+- Maven 
 - IntelliJ IDEA or any preferred Java IDE
 
 ### Clone the Repository
@@ -35,19 +35,11 @@ For Maven:
 ```bash
 mvn clean install
 ```
-For Gradle:
-```bash
-./gradlew build
-```
 
 ### Running the Application
 To run the application, use the following command:
 ```bash
 mvn spring-boot:run
-```
-or if using Gradle:
-```bash
-./gradlew bootRun
 ```
 
 The application will start on port 8080 by default. You can access the API at `http://localhost:8080`.
@@ -88,11 +80,6 @@ Unit tests are available for the project, and you can run them using:
 For Maven:
 ```bash
 mvn test
-```
-
-For Gradle:
-```bash
-./gradlew test
 ```
 
 ### Additional Configuration
