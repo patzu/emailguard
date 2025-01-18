@@ -20,7 +20,7 @@
 ## Getting Started
 
 ### Prerequisites
-- Java 11 or higher
+- Java 21 or higher
 - Maven or Gradle (for dependency management)
 - IntelliJ IDEA or any preferred Java IDE
 
