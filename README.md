@@ -1,20 +1,18 @@
 # EmailGuard
 
-**EmailGuard** is a Spring Boot application designed to process and validate email content based on predefined semantic rules. The application checks the provided email text against a set of rules (e.g., grammatical accuracy, semantic clarity, market impact, etc.), and returns the text with feedback on which parts of the content pass or breach the rules. Breached sections are highlighted in red, and suggestions for corrections are provided.
+**EmailGuard** is a Spring Boot application designed to process and validate email content based on predefined semantic rules. The application checks the provided email text against a set of rules (e.g., grammatical accuracy, semantic clarity, potential risks, etc.), and returns the text with feedback on which parts of the content pass or breach the rules. Sections that breach the rules are highlighted in different colors (e.g., red for critical breaches, yellow for minor issues, and green for valid sections). Suggestions for corrections are also provided for problematic parts of the email.
 
 ## Features
 - Accepts email content as text via a RESTful API.
-- Processes the email content based on a predefined set of rules.
-- Highlights sections of the email content that breach the rules using HTML tags (e.g., red for breaches, green for valid sections).
-- Provides alternative suggestions for breached content.
+- Processes email content based on a predefined set of rules.
+- Highlights sections of the email content that breach the rules using HTML tags (e.g., red for breaches, yellow for risky, and green for safe).
+- Provides alternative suggestions for breached content in parentheses.
 - Flexible rule configuration via API, allowing dynamic updates to the rules set.
+- Integration with OpenAI API for advanced semantic analysis and text processing.
 
 ## Technologies Used
 - **Spring Boot**: For building the RESTful API and managing application logic.
-- **Spring Data JPA**: For database interactions, allowing persistence of rules and logs.
-- **H2 Database**: A lightweight in-memory database for development purposes.
 - **OpenAI API**: For advanced semantic analysis and text processing.
-- **JavaMailSender (optional)**: For sending processed emails (if needed).
 - **JUnit/Mockito**: For testing and mocking external dependencies.
 
 ## Getting Started
@@ -46,12 +44,16 @@ The application will start on port 8080 by default. You can access the API at `h
 
 ### API Endpoints
 #### POST `/process-email`
-- **Description**: Accepts an email's text content and processes it against a set of rules.
+- **Description**: Accepts an email's text content and processes it against a set of rules to identify breaches, determine severity (color coding), and provide suggestions for corrections.
 - **Request Body**:
   ```json
   {
-    "emailContent": "Your email text here",
-    "rules": ["rule1", "rule2", "rule3"]
+    "content": "Your email text here",
+    "rules": [
+      "Ensure professional language is used",
+      "Check for risky or ambiguous language that could cause issues",
+      "Make sure the instructions are clear and actionable"
+    ]
   }
   ```
 - **Response**:
@@ -66,10 +68,10 @@ The application will start on port 8080 by default. You can access the API at `h
     ```json
     {
       "status": "error",
-      "processedEmail": "Your email content with breached rules highlighted in red.",
+      "processedEmail": "Your email content with breached rules highlighted in red and yellow.",
       "suggestions": [
-        "Suggested correction for breached part #1",
-        "Suggested correction for breached part #2"
+        "Suggested correction for the red-flagged sentence.",
+        "Suggested correction for the yellow-flagged sentence."
       ]
     }
     ```
