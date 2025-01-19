@@ -56,6 +56,25 @@ The application will start on port 8080 by default. You can access the API at `h
     ]
   }
   ```
+
+```Example email and rules
+{
+  "content": "Dear Asset Manager,\n\nI hope this email finds you well. We need you to look into our current asset portfolio and make necessary adjustments. Please review the following and manage the assets accordingly:\n\n1. The asset performance seems low this quarter, could you review it and suggest some corrective actions?\n2. I want you to make sure our current investments are optimally aligned with market conditions, but we should also maintain the current investment in tech stocks.\n3. Kindly diversify into sectors that could yield high returns, particularly in the energy sector, where we have not invested much.\n4. You should also evaluate any risky moves made in the last quarter.\n5. Let’s be cautious about potential losses in volatile sectors.\n6. Also, ensure that any new strategies are well documented, and potential risks are communicated.\n7. Review current deadlines and make sure we’re on track.\n\nThank you, and I await your feedback and suggestions.\n\nBest regards,\n[Your Name]",
+  "rules": [
+    "Ensure that all instructions are clear and precise. Avoid ambiguity or vague statements that could be misinterpreted.",
+    "Use consistent terminology throughout the email. Avoid using different terms for the same concept, as it may lead to confusion.",
+    "Every request or action in the email should be specific and actionable, with clear timelines or conditions attached.",
+    "The language should remain formal and professional, avoiding casual or overly friendly phrases that may undermine the seriousness of the communication.",
+    "Any decisions involving risk (e.g., financial or legal) should be backed by a clear assessment or recommendation. Avoid making high-risk suggestions without proper analysis or safeguards.",
+    "Ensure that all data and figures provided in the email are accurate and up-to-date. Double-check numerical values, dates, and financial information to avoid errors.",
+    "Any actions proposed should be compliant with legal or regulatory requirements. Ensure that all necessary legal checks have been considered and documented.",
+    "Clearly outline the next steps, responsibilities, and deadlines. The recipient should know exactly what is expected of them after reading the email.",
+    "Structure the email in a way that separates different topics or instructions. Use headings, bullet points, or numbered lists to make the content more readable and organized.",
+    "Ensure the email is free from spelling, grammatical, or typographical errors. Always proofread before sending to ensure the professionalism and accuracy of the communication."
+  ]
+}
+```
+  
 - **Response**:
   - If the email passes all the rules:
     ```json
