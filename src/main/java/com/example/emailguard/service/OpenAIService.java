@@ -102,8 +102,11 @@ OpenAIService {
         // Clean up the API response to remove unwanted escape characters
         String cleanedResponse = cleanApiResponse(response.getBody());
 
+        // Create the final HTML scaffold and insert the cleaned response into the body
+        String finalHtmlResponse = createHtmlResponse(cleanedResponse);
+
         // Return the response directly (since it's already in HTML format)
-        return ResponseEntity.ok(cleanedResponse);
+        return ResponseEntity.ok(finalHtmlResponse);
     }
 
     public String cleanApiResponse(String apiResponse) {
@@ -122,5 +125,26 @@ OpenAIService {
         return cleanedResponse;
     }
 
+    private String createHtmlResponse(String cleanedResponse) {
+        // Wrap the cleaned response in the final HTML scaffold
+        String htmlTemplate = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Email Review</title>\n" +
+                "    <style>\n" +
+                "        .green { color: lightgreen; }\n" +
+                "        .yellow { color: #d7d700; } /* Darker yellow for better visibility */\n" +
+                "        .red { color: red; }\n" +
+                "        .suggestion { font-style: italic; color: #555; }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                cleanedResponse + // Insert the cleaned response content here
+                "</body>\n" +
+                "</html>";
 
+        return htmlTemplate;
+    }
 }
