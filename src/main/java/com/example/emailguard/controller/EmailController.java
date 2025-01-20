@@ -4,6 +4,7 @@ import com.example.emailguard.model.EmailRequest;
 import com.example.emailguard.model.ProcessedEmailResponse;
 import com.example.emailguard.service.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class EmailController {
     }
 
     @PostMapping("/process")
-    public ProcessedEmailResponse processEmail(@RequestBody EmailRequest emailRequest) {
+    public ResponseEntity<String> processEmail(@RequestBody EmailRequest emailRequest) {
 
         // Pass the email content and rules to the service
         return openAIService.processEmail(emailRequest);
