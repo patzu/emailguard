@@ -2,17 +2,17 @@ package com.example.emailguard.service;
 
 import com.example.emailguard.exception.InvalidEmailException;
 import com.example.emailguard.model.EmailRequest;
-import com.example.emailguard.model.ProcessedEmailResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @Service
 public class
@@ -64,7 +64,7 @@ OpenAIService {
                         "- Yellow: The sentence is somewhat vague or could lead to ambiguity, breaching the rules in some way.- " +
                         "- Red: The sentence is high-risk or unclear, breaching the rules in a significant way.For any sentences that " +
                         "breach the rules, add suggestions for improvement in parentheses next to the sentence. Ensure that the rules are clearly " +
-                        "numbered in your response and identify which rule was breached." + "Here is the sample output html placeholder "+
+                        "numbered in your response and identify which rule was breached." + "Here is the sample output html placeholder " +
 
                         "<p class=\"green\">{Sentence}</p>" +
                         "<p class=\"yellow\"><strong>{sentence is here}</strong> (Breached Rule #1})</p>" +
@@ -95,8 +95,32 @@ OpenAIService {
         String url = UriComponentsBuilder.fromHttpUrl(apiUrl).toUriString();
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
 
+        if (response.getBody() == null) {
+            throw new RuntimeException("API response body is null");
+        }
+
+        // Clean up the API response to remove unwanted escape characters
+        String cleanedResponse = cleanApiResponse(response.getBody());
+
         // Return the response directly (since it's already in HTML format)
-        return response;
+        return ResponseEntity.ok(cleanedResponse);
     }
+
+    public String cleanApiResponse(String apiResponse) {
+        // Remove escaped quotes (\" -> ")
+        String cleanedResponse = apiResponse.replace("\\\"", "\"");
+
+        // Remove escaped newlines (\n) and replace with actual newlines if needed
+        cleanedResponse = cleanedResponse.replace("\\n", "\n");
+
+        // You can remove any other unwanted escape sequences if needed (like tabs, etc.)
+        cleanedResponse = cleanedResponse.replace("\\t", "\t");
+
+        // Remove any unnecessary escape backslashes from HTML entities like &#xD;
+        cleanedResponse = cleanedResponse.replace("\\", "");
+
+        return cleanedResponse;
+    }
+
 
 }
